@@ -63,4 +63,9 @@ function M.get_current_entries_by_group(group)
   return current[group] or {}
 end
 
+---@type ContextGroups
+M.default = {
+  lang = require("fzf-lua-grep-context.contexts.lang"),
+}
+
 return M

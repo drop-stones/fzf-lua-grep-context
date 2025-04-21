@@ -1,4 +1,5 @@
 -- Handles plugin configuration and context initialization
+local contexts = require("fzf-lua-grep-context.contexts")
 local util = require("fzf-lua-grep-context.util")
 
 ---@alias ContextGroups table<string, ContextGroup>
@@ -47,6 +48,13 @@ function M.setup(opts)
 
   -- Set plugin root path for access from headless child processes
   vim.env.FZF_LUA_GREP_CONTEXT = util.get_plugin_root()
+
+  -- Initialize all available context groups
+  local ctxs = vim.tbl_deep_extend("force", contexts.default, opts.contexts or {})
+  contexts.initialize_contexts(ctxs)
+
+  -- Initialize current selection as empty at startup
+  contexts.initialize_current_contexts({})
 end
 
 return M

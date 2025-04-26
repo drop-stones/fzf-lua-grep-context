@@ -28,6 +28,7 @@ local util = require("fzf-lua-grep-context.util")
 ---@field globs? string[]
 
 ---@class PickerOptions
+---@field default_group? string
 ---@field title_fmt? string
 ---@field opts? table
 

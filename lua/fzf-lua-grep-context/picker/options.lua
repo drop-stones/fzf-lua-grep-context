@@ -9,6 +9,7 @@ local options = nil
 ---@param opts? PickerOptions
 function M.initialize_options(opts)
   local default = {
+    default_group = "default",
     title_fmt = " Grep Context: %s ",
     opts = {
       actions = {

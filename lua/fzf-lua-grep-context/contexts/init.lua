@@ -7,10 +7,31 @@ local M = {}
 ---@type ContextGroups
 local contexts = {}
 
+---Check if `ctxs` is ContextGroup
+---@param ctxs? ContextGroups | ContextGroup
+---@return boolean
+local function is_contex_groupt(ctxs)
+  return type(ctxs) == "table" and type(ctxs.title) == "string" and type(ctxs.entries) == "table"
+end
+
 ---Initialize context groups
----@param ctxs ContextGroups
+---@param ctxs? ContextGroups | ContextGroup
 function M.initialize_contexts(ctxs)
-  contexts = ctxs
+  ---@type ContextGroups
+  local default = {
+    default = {
+      title = "Default",
+      entries = {},
+    },
+    lang = require("fzf-lua-grep-context.contexts.lang"),
+  }
+
+  ctxs = ctxs or {}
+  if is_contex_groupt(ctxs) then
+    ctxs = { default = ctxs }
+  end
+
+  contexts = vim.tbl_deep_extend("force", default, ctxs)
 end
 
 ---Get a full context group by its name
@@ -62,10 +83,5 @@ function M.get_current_entries_by_group(group)
   local current = vim.json.decode(vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT)
   return current[group] or {}
 end
-
----@type ContextGroups
-M.default = {
-  lang = require("fzf-lua-grep-context.contexts.lang"),
-}
 
 return M

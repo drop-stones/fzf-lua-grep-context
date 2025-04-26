@@ -7,7 +7,7 @@ local util = require("fzf-lua-grep-context.util")
 ---@alias ContextEntries table<string, GrepContext>
 
 ---@class FzfLuaGrepContextOptions
----@field contexts? ContextGroups
+---@field contexts? ContextGroups | ContextGroup
 ---@field picker? PickerOptions
 ---@field selected? SelectedOptions
 
@@ -51,8 +51,7 @@ function M.setup(opts)
   vim.env.FZF_LUA_GREP_CONTEXT = util.get_plugin_root()
 
   -- Initialize all available context groups
-  local ctxs = vim.tbl_deep_extend("force", contexts.default, opts.contexts or {})
-  contexts.initialize_contexts(ctxs)
+  contexts.initialize_contexts(opts.contexts)
 
   -- Initialize current selection as empty at startup
   contexts.initialize_current_contexts({})

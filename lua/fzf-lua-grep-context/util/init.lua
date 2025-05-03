@@ -8,4 +8,5 @@ return {
   parse_grep_query = require("fzf-lua-grep-context.util.parse_grep_query"),
   startinsert = require("fzf-lua-grep-context.util.startinsert"),
   deep_extend_inplace = require("fzf-lua-grep-context.util.deep_extend_inplace"),
+  fuzzy_match = require("fzf-lua-grep-context.util.fuzzy_match"),
 }

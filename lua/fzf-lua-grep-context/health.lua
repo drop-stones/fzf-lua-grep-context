@@ -1,9 +1,12 @@
+-- Healthcheck for fzf-lua-grep-context to validate environment and configuration
+
+---Represent a semantic version of Neovim
 ---@class NeovimVersion
 ---@field major integer
 ---@field minor integer
 ---@field patch integer
 
----Checks if the current Neovim version is greater or equal to the given version.
+---Ensure minimum required Neovim version is met
 ---@param required_version NeovimVersion
 local function check_nvim_version(required_version)
   local version = vim.version()
@@ -20,7 +23,7 @@ local function check_nvim_version(required_version)
   end
 end
 
----Checks if a plugin is installed and reports its status.
+---Verify that a plugin dependency is installed and report its status
 ---@param plugin_name string
 ---@param require_name string
 ---@param is_required boolean
@@ -37,19 +40,19 @@ local function check_plugin(plugin_name, require_name, is_required)
   end
 end
 
----Return true if the value is a table
+---Type utility: check if value is a table
 ---@return boolean
 local function is_table(v)
   return type(v) == "table"
 end
 
----Return true if the value is a string
+---Type utility: check if a value is a string
 ---@return boolean
 local function is_string(v)
   return type(v) == "string"
 end
 
----Return true if the value is a string array
+---Type utility: check if value is an array of strings (optionally of fixed length)
 ---@param len? integer
 ---@return boolean
 local function is_string_array(v, len)
@@ -67,13 +70,13 @@ local function is_string_array(v, len)
   return true
 end
 
----Return true if the value is a function
+---Type utility: check if value is a function
 ---@return boolean
 local function is_function(v)
   return type(v) == "function"
 end
 
----Validate a single GrepContext and return whether it has any problems
+---Validate a single GrepContext and report any field issues
 ---@param ctx GrepContext
 ---@param name string
 ---@return boolean
@@ -206,6 +209,7 @@ local function check_picker(picker)
   end
 end
 
+-- Main health entry point for `:checkhealth`
 return {
   check = function()
     vim.health.start("fzf-lua-grep-context")

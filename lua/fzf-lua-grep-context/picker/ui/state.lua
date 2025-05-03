@@ -1,15 +1,19 @@
----@class UIState
----@field items ContextEntries
----@field selected table<string, boolean>
----@field selected_initial table<string, boolean>
----@field filtered FilteredEntry[]
----@field query string
----@field cursor integer
+-- Stores and filter the current UI state and selection
 
+---Represent the full UI state, including selection and filtering info
+---@class UIState
+---@field items ContextEntries All available items to display
+---@field selected table<string, boolean> Currently selected keys
+---@field selected_initial table<string, boolean> Initial selection snapshot for diffing
+---@field filtered FilteredEntry[] Items currently shown after filtering
+---@field query string Current search query
+---@field cursor integer Current highlighted row in filtered list
+
+---Represent a filtered list entry with match metadata
 ---@class FilteredEntry
----@field key string
----@field label string
----@field positions integer[]
+---@field key string Key of the entry (used in state lookups)
+---@field label string Display label
+---@field positions integer[] Matched character positions in label
 
 ---@class UIState
 local state = {
@@ -22,6 +26,7 @@ local state = {
   cursor = 1,
 }
 
+---Filter items based on fuzzy score from input query
 ---@param query? string
 function state.filter(query)
   state.query = query or ""
@@ -50,6 +55,7 @@ function state.filter(query)
     ::continue::
   end
 
+  -- Sort by score, then selection, then label
   table.sort(results, function(a, b)
     if a.score ~= b.score then
       return a.score > b.score
@@ -60,6 +66,7 @@ function state.filter(query)
     end
   end)
 
+  -- Store sorted filtered results
   state.filtered = {}
   for _, entry in ipairs(results) do
     table.insert(state.filtered, {
@@ -70,6 +77,7 @@ function state.filter(query)
   end
 end
 
+---Initialize internal state
 ---@param items ContextEntries
 ---@param selected table<string, boolean>
 function state.init(items, selected)
@@ -81,11 +89,13 @@ function state.init(items, selected)
   state.filter()
 end
 
+---Check if item toggled from initial selection
 ---@return boolean
 function state.toggled(key)
   return (state.selected_initial[key] or false) ~= (state.selected[key] or false)
 end
 
+---Return true if selection has not changed
 ---@return boolean
 function state.unchanged()
   for key, _ in pairs(state.selected) do

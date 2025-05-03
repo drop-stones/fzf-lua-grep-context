@@ -1,9 +1,9 @@
--- Handles <Esc> key press by restoring the previous picker state
+-- Handles `exit` key press by restoring the previous picker state
 local layout = require("fzf-lua-grep-context.picker.ui.layout")
 local state = require("fzf-lua-grep-context.picker.state")
 local util = require("fzf-lua-grep-context.util")
 
----Re-runs the original picker with the last query and options
+---Restore the picker with previous query and options on exit
 local function exit()
   layout.unmount()
 

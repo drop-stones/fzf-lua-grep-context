@@ -1,3 +1,4 @@
+---Check if a table is a list(array-like)
 ---@param tbl table
 ---@return boolean
 local function is_list(tbl)
@@ -10,11 +11,12 @@ local function is_list(tbl)
   end
 end
 
+---Check if a table is a non-list table (map-like)
 local function is_table(tbl)
   return type(tbl) == "table" and (not is_list(tbl))
 end
 
----Recursively merges values from `src` into `dst`, modifying `dst` in-place
+---Deep merges `src` into `dst` recursively and mutates `dst`
 ---@param dst table
 ---@param src table
 local function deep_extend_inplace(dst, src)

@@ -1,4 +1,4 @@
--- Entry point for grep-context picker actions
+-- Load and flatten all picker action modules into a single table
 
 local M = {}
 

@@ -11,6 +11,7 @@ function M.setup(opts)
   config.setup(opts)
 end
 
+-- Expose the main picker function for launching the UI
 M.picker = picker.picker
 
 return M

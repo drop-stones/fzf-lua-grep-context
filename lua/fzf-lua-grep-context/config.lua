@@ -6,14 +6,17 @@ local util = require("fzf-lua-grep-context.util")
 ---@alias ContextGroups table<string, ContextGroup>
 ---@alias ContextEntries table<string, GrepContext>
 
+---User plugin options passed to setup()
 ---@class FzfLuaGrepContextOptions
 ---@field contexts? ContextGroups | ContextGroup
 ---@field picker? PickerOptions
 
+---Represents a group of grep context entries shown in the checklist
 ---@class ContextGroup
 ---@field title string
 ---@field entries ContextEntries
 
+---Describe a single grep context item selectable in the checklist
 ---@class GrepContext
 ---@field label string
 ---@field icon? { [1]: string, [2]: string }
@@ -22,15 +25,18 @@ local util = require("fzf-lua-grep-context.util")
 ---@field globs? string[]
 ---@field commands? table<string, CommandContext>
 
+---Optional context overrides for a specific grep command
 ---@class CommandContext
 ---@field flags? string[]
 ---@field globs? string[]
 
+---User-defined options for customizing the checklist picker UI
 ---@class PickerOptions
 ---@field default_group? string
 ---@field title_fmt? string
 ---@field keymaps? PickerKeymapEntry[]
 
+---Describe a single keymap entry to use within the picker
 ---@class PickerKeymapEntry
 ---@field [1] string
 ---@field [2] function

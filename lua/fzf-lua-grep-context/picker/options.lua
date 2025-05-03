@@ -1,4 +1,4 @@
--- Stores and retrieves picker-specific options
+-- Default picker options and key mappings
 local actions = require("fzf-lua-grep-context.actions")
 local util = require("fzf-lua-grep-context.util")
 
@@ -27,6 +27,7 @@ local options = {
 ---Initialize default and user-defined picker options
 ---@param opts? PickerOptions
 function options.init(opts)
+  -- Merge user options into default picker options
   util.deep_extend_inplace(options, opts or {})
 end
 

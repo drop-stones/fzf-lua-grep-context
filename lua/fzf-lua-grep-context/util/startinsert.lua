@@ -1,3 +1,4 @@
+-- Start insert mode after detecting the target filetype within timeout
 ---@param timeout integer
 ---@param filetype string
 local function startinsert(timeout, filetype)

@@ -1,3 +1,4 @@
+-- Define and mount the layout for input and list popups
 local Input = require("nui.input")
 local Layout = require("nui.layout")
 local NuiText = require("nui.text")
@@ -16,8 +17,11 @@ local layout
 
 local M = {}
 
+---Initialize UI layout with input and list popup
 function M.init()
   local winopts = picker_state.resume_data.opts.winopts
+
+  -- Setup input popup window with live filtering callback
   input_popup = Input({
     border = {
       style = winopts.border,
@@ -38,6 +42,7 @@ function M.init()
     end,
   })
 
+  -- Setup list popup window
   list_popup = Popup({
     border = { style = winopts.border },
     win_options = {
@@ -45,6 +50,7 @@ function M.init()
     },
   })
 
+  -- Combine input and list into a vertical layout
   layout = Layout(
     {
       position = {
@@ -64,16 +70,17 @@ function M.init()
   )
 end
 
+---Mount layout and assign keymaps
 function M.mount()
   layout:mount()
 
-  -- window/buffer settings
+  -- Set filetype for syntax/behavior control
   M.winid = list_popup.winid
   M.bufnr = list_popup.bufnr
   vim.bo[input_popup.bufnr].filetype = filetype
   vim.bo[list_popup.bufnr].filetype = filetype
 
-  -- keymaps
+  -- Register keymaps defined in options
   local options = require("fzf-lua-grep-context.picker.options")
   for _, map in ipairs(options.keymaps) do
     local key = map[1]
@@ -85,9 +92,11 @@ function M.mount()
     end
   end
 
+  -- Start in insert mode after short delay
   util.startinsert(500, filetype)
 end
 
+---Unmount layout
 function M.unmount()
   layout:unmount()
 end

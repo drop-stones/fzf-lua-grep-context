@@ -1,3 +1,4 @@
+-- Cursor movement actions within the custom picker UI
 local layout = require("fzf-lua-grep-context.picker.ui.layout")
 local render = require("fzf-lua-grep-context.picker.ui.render")
 local state = require("fzf-lua-grep-context.picker.ui.state")

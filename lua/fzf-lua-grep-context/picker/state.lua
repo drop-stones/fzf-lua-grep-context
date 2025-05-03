@@ -1,5 +1,4 @@
--- Manages current picker state: group name, title and resume data
-
+---Picker state for managing group, title and fzf-lua resume info
 ---@class PickerState
 ---@field resume_data table Resume data from fzf-lua
 ---@field group string Currently selected context group name

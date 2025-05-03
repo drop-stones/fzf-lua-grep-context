@@ -1,3 +1,4 @@
+---Perform basic fuzzy matching and scoring of query against text
 ---@param text string
 ---@param query string
 ---@return integer, integer[]

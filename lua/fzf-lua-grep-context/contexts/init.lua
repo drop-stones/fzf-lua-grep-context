@@ -84,4 +84,15 @@ function M.get_current_entries_by_group(group)
   return current[group] or {}
 end
 
+---Get a current set of entry keys of a group from env
+---@param group string
+---@return table<string, boolean>
+function M.get_current_key_set_by_group(group)
+  local current = vim.json.decode(vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT)
+  return vim.iter(vim.tbl_keys(current[group] or {})):fold({}, function(acc, val)
+    acc[val] = true
+    return acc
+  end)
+end
+
 return M

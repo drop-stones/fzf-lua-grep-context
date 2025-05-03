@@ -11,5 +11,6 @@ function M.setup(opts)
   config.setup(opts)
 end
 
+M.picker = picker.picker
 
 return M

@@ -49,6 +49,30 @@ local function is_string(v)
   return type(v) == "string"
 end
 
+---Return true if the value is a string array
+---@param len? integer
+---@return boolean
+local function is_string_array(v, len)
+  if not is_table(v) then
+    return false
+  end
+  if len and #v ~= len then
+    return false
+  end
+  for _, e in ipairs(v) do
+    if not is_string(e) then
+      return false
+    end
+  end
+  return true
+end
+
+---Return true if the value is a function
+---@return boolean
+local function is_function(v)
+  return type(v) == "function"
+end
+
 ---Validate a single GrepContext and return whether it has any problems
 ---@param ctx GrepContext
 ---@param name string
@@ -59,8 +83,8 @@ local function check_grep_context(ctx, name)
     vim.health.warn(string.format("Context '%s' is missing a valid 'label'", name))
     has_problem = true
   end
-  if ctx.icon and not is_string(ctx.icon) then
-    vim.health.warn(string.format("Context '%s' has non-string 'icon'", name))
+  if ctx.icon and not is_string_array(ctx.icon, 2) then
+    vim.health.warn(string.format("Context '%s' has invalid 'icon' (expected string[2])", name))
     has_problem = true
   end
   if ctx.filetype and not is_string(ctx.filetype) then
@@ -146,46 +170,39 @@ local function check_picker(picker)
     vim.health.error("'picker' must be a table")
     has_problem = true
   else
+    if picker.default_group and not is_string(picker.default_group) then
+      vim.health.warn("'picker.default_group' should be a string")
+      has_problem = true
+    end
     if picker.title_fmt and not is_string(picker.title_fmt) then
       vim.health.warn("'picker.title_fmt' should be a string")
       has_problem = true
     end
-    if picker.opts and not is_table(picker.opts) then
-      vim.health.warn("'picker.opts' should be a table")
-      has_problem = true
+    if picker.keymaps then
+      if not is_table(picker.keymaps) then
+        vim.health.warn("'picker.opts' should be a table")
+        has_problem = true
+      else
+        for idx, entry in ipairs(picker.keymaps) do
+          if not is_string(entry[1]) then
+            vim.health.warn(string.format("'picker.keymaps[%d]': [1] should be a string", idx))
+            has_problem = true
+          end
+          if not is_function(entry[2]) then
+            vim.health.warn(string.format("'picker.keymaps[%d]': [2] should be a function", idx))
+            has_problem = true
+          end
+          if entry.mode and not (is_string(entry.mode) or is_string_array(entry.mode)) then
+            vim.health.warn(string.format("'picker.keymaps[%d]': mode should be a string or string[]", idx))
+            has_problem = true
+          end
+        end
+      end
     end
   end
 
   if not has_problem then
     vim.health.ok("'picker' is valid")
-  end
-end
-
----Validate the 'selected' option structure and report issues
----@param selected SelectedOptions
-local function check_selected(selected)
-  if not selected then
-    vim.health.info("'selected' not defined (optional)")
-    return
-  end
-
-  local has_problem = false
-  if not is_table(selected) then
-    vim.health.error("'selected' must be a table")
-    has_problem = true
-  else
-    if not is_string(selected.rgb) then
-      vim.health.warn("'selected.rgb' should be a string")
-      has_problem = true
-    end
-    if not is_string(selected.icon) then
-      vim.health.warn("'selected.icon' should be a string")
-      has_problem = true
-    end
-  end
-
-  if not has_problem then
-    vim.health.ok("'selected' is valid")
   end
 end
 
@@ -195,10 +212,10 @@ return {
 
     check_nvim_version({ major = 0, minor = 10, patch = 0 })
     check_plugin("fzf-lua", "fzf-lua", true)
+    check_plugin("nui.nvim", "nui.text", true)
 
     local opts = require("fzf-lua-grep-context.config").options
     check_contexts(opts.contexts)
     check_picker(opts.picker)
-    check_selected(opts.selected)
   end,
 }

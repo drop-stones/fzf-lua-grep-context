@@ -8,10 +8,7 @@ local function get_from_web_devicons()
     return nil
   end
 
-  return function(filetype)
-    local icon, hl = devicons.get_icon_by_filetype(filetype)
-    return require("fzf-lua.utils").ansi_from_hl(hl, icon)
-  end
+  return devicons.get_icon_by_filetype
 end
 
 ---Return an icon getter using mini.icons if available
@@ -22,16 +19,14 @@ local function get_from_mini_icons()
     return nil
   end
 
-  return function(filetype)
-    local icon, hl = mini_icons.get_icon_by_filetype(filetype)
-    return require("fzf-lua.utils").ansi_from_hl(hl, icon)
-  end
+  return mini_icons.get_icon_by_filetype
 end
 
 ---Choose the available icon provider or fallback to empty string
+---@return fun(string): string, string
 local function setup_provider()
   -- stylua: ignore
-  return get_from_web_devicons() or get_from_mini_icons() or function(_) return "" end -- fallback: no icon
+  return get_from_web_devicons() or get_from_mini_icons() or function(_) return "", "Normal" end -- fallback: no icon
 end
 
 return setup_provider()

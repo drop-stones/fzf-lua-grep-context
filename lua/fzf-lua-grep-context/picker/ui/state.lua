@@ -6,6 +6,11 @@
 ---@field query string
 ---@field cursor integer
 
+---@class FilteredEntry
+---@field key string
+---@field label string
+---@field positions integer[]
+
 ---@class UIState
 local state = {
   items = {},
@@ -17,6 +22,54 @@ local state = {
   cursor = 1,
 }
 
+---@param query? string
+function state.filter(query)
+  state.query = query or ""
+  state.cursor = 1
+
+  local results = {}
+  for key, item in pairs(state.items) do
+    local score, positions
+    if state.query == "" then
+      score, positions = 0, {}
+    else
+      score, positions = require("fzf-lua-grep-context.util").fuzzy_match(item.label, state.query)
+      if score == 0 then
+        goto continue
+      end
+    end
+
+    table.insert(results, {
+      key = key,
+      score = score,
+      selected = state.selected_initial[key] and 1 or 0,
+      label = item.label,
+      positions = positions,
+    })
+
+    ::continue::
+  end
+
+  table.sort(results, function(a, b)
+    if a.score ~= b.score then
+      return a.score > b.score
+    elseif a.selected ~= b.selected then
+      return a.selected > b.selected
+    else
+      return a.label < b.label
+    end
+  end)
+
+  state.filtered = {}
+  for _, entry in ipairs(results) do
+    table.insert(state.filtered, {
+      key = entry.key,
+      label = entry.label,
+      positions = entry.positions,
+    })
+  end
+end
+
 ---@param items ContextEntries
 ---@param selected table<string, boolean>
 function state.init(items, selected)
@@ -24,6 +77,9 @@ function state.init(items, selected)
   state.selected = selected or {}
   state.selected_initial = vim.deepcopy(state.selected)
   state.query = ""
+
+  state.filter()
+end
 
 ---@return boolean
 function state.toggled(key)

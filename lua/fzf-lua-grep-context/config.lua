@@ -16,7 +16,7 @@ local util = require("fzf-lua-grep-context.util")
 
 ---@class GrepContext
 ---@field label string
----@field icon? string
+---@field icon? { [1]: string, [2]: string }
 ---@field filetype? string
 ---@field flags? string[]
 ---@field globs? string[]

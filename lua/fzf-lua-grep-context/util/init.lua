@@ -6,4 +6,5 @@ return {
   shellescape = require("fzf-lua-grep-context.util.shellescape"),
   parse_grep_contexts = require("fzf-lua-grep-context.util.parse_grep_contexts"),
   parse_grep_query = require("fzf-lua-grep-context.util.parse_grep_query"),
+  deep_extend_inplace = require("fzf-lua-grep-context.util.deep_extend_inplace"),
 }

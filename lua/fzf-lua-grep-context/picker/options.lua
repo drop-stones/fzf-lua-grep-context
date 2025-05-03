@@ -1,31 +1,33 @@
 -- Stores and retrieves picker-specific options
+local actions = require("fzf-lua-grep-context.actions")
+local util = require("fzf-lua-grep-context.util")
 
-local M = {}
-
----@type PickerOptions
-local options = nil
+---@class PickerOptions
+local options = {
+  default_group = "default",
+  title_fmt = " Grep Context: %s ",
+  keymaps = {
+    { "<Down>", actions.move_down, mode = { "n", "i" } },
+    { "<Up>", actions.move_up, mode = { "n", "i" } },
+    { "<C-j>", actions.move_down, mode = { "n", "i" } },
+    { "<C-k>", actions.move_up, mode = { "n", "i" } },
+    { "<C-d>", actions.half_page_down, mode = { "n", "i" } },
+    { "<C-u>", actions.half_page_up, mode = { "n", "i" } },
+    { "<Tab>", actions.toggle_select, mode = { "n", "i" } },
+    { "<CR>", actions.confirm, mode = { "n", "i" } },
+    { "<Esc>", actions.exit, mode = { "n", "i" } },
+    { "j", actions.move_down, mode = "n" },
+    { "k", actions.move_up, mode = "n" },
+    { "gg", actions.move_top, mode = "n" },
+    { "G", actions.move_bottom, mode = "n" },
+    { "q", actions.exit, mode = "n" },
+  },
+}
 
 ---Initialize default and user-defined picker options
 ---@param opts? PickerOptions
-function M.initialize_options(opts)
-  local default = {
-    default_group = "default",
-    title_fmt = " Grep Context: %s ",
-    opts = {
-      actions = {
-        ["default"] = require("fzf-lua-grep-context.actions").on_select,
-        ["esc"] = require("fzf-lua-grep-context.actions").on_esc,
-      },
-    },
-  }
-
-  options = vim.tbl_deep_extend("force", default, opts or {})
+function options.init(opts)
+  util.deep_extend_inplace(options, opts or {})
 end
 
----Retrieve the current picker options
----@return table
-function M.get_options()
-  return options
-end
-
-return M
+return options

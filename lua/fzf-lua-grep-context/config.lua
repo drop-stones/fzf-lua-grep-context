@@ -1,6 +1,6 @@
 -- Handles plugin configuration and context initialization
 local contexts = require("fzf-lua-grep-context.contexts")
-local picker_ = require("fzf-lua-grep-context.picker")
+local picker = require("fzf-lua-grep-context.picker")
 local util = require("fzf-lua-grep-context.util")
 
 ---@alias ContextGroups table<string, ContextGroup>
@@ -29,11 +29,12 @@ local util = require("fzf-lua-grep-context.util")
 ---@class PickerOptions
 ---@field default_group? string
 ---@field title_fmt? string
----@field opts? table
+---@field keymaps? PickerKeymapEntry[]
 
----@class SelectedOptions
----@field rgb string
----@field icon string
+---@class PickerKeymapEntry
+---@field [1] string
+---@field [2] function
+---@field mode? string|string[]
 
 local M = {}
 
@@ -57,8 +58,7 @@ function M.setup(opts)
   contexts.initialize_current_contexts({})
 
   -- Apply user-defined picker options
-  picker_.initialize_options(opts.picker)
-  picker_.initialize_selected_options(opts.selected)
+  picker.options.init(opts.picker)
 end
 
 return M

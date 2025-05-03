@@ -9,7 +9,6 @@ local util = require("fzf-lua-grep-context.util")
 ---@class FzfLuaGrepContextOptions
 ---@field contexts? ContextGroups | ContextGroup
 ---@field picker? PickerOptions
----@field selected? SelectedOptions
 
 ---@class ContextGroup
 ---@field title string

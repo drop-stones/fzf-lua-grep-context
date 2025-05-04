@@ -1,4 +1,5 @@
 -- Transforms a ripgrep command by injecting parsed flags and glob patterns
+local options = require("fzf-lua-grep-context.transform.options")
 local util = require("fzf-lua-grep-context.util")
 
 ---Converts glob patterns into ripgrep-compatible command-line args
@@ -17,14 +18,14 @@ end
 ---Injects grep-context flags and globs into a ripgrep command
 ---@param query string
 ---@param cmd string?
----@param glob_separator string
----@param glob_flag string
 ---@return string?, string?
-local function fn_transform_cmd(query, cmd, glob_separator, glob_flag)
+local function fn_transform_cmd(query, cmd)
   if not cmd or query == "<query>" then
     return
   end
 
+  local glob_flag = options.glob_flag()
+  local glob_separator = options.glob_separator()
   local flags, globs = util.parse_grep_contexts("rg")
   local search_query, rg_globs = util.parse_grep_query(query, glob_separator)
   globs = process_globs(vim.list_extend(globs, rg_globs), glob_flag)

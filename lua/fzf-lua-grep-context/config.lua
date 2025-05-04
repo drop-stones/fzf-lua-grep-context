@@ -1,6 +1,7 @@
 -- Handles plugin configuration and context initialization
 local contexts = require("fzf-lua-grep-context.contexts")
 local picker = require("fzf-lua-grep-context.picker")
+local transform = require("fzf-lua-grep-context.transform")
 local util = require("fzf-lua-grep-context.util")
 
 ---@alias ContextGroups table<string, ContextGroup>
@@ -62,6 +63,9 @@ function M.setup(opts)
 
   -- Initialize current selection as empty at startup
   contexts.initialize_current_contexts({})
+
+  -- Initialize options for fn_transform_cmd()
+  transform.options.init()
 
   -- Apply user-defined picker options
   picker.options.init(opts.picker)

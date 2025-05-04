@@ -1,4 +1,5 @@
 -- Transforms a git-grep command by injecting parsed flags and pathspecs
+local options = require("fzf-lua-grep-context.transform.options")
 local util = require("fzf-lua-grep-context.util")
 
 ---Converts glob patterns into git-compatible pathspecs (handles negation)
@@ -21,13 +22,13 @@ end
 ---Injects grep-context flags and pathspecs into a git-grep command
 ---@param query string
 ---@param cmd string?
----@param glob_separator string
 ---@return string?, string?
-local function fn_transform_cmd(query, cmd, glob_separator)
+local function fn_transform_cmd(query, cmd)
   if cmd == nil or query == "<query>" then
     return
   end
 
+  local glob_separator = options.glob_separator()
   local flags, globs = util.parse_grep_contexts("git_grep")
   local search_query, git_globs = util.parse_grep_query(query, glob_separator)
   local pathspecs = process_pathspecs(vim.list_extend(globs, git_globs))

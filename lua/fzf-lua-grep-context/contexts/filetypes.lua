@@ -1,8 +1,8 @@
--- Predefined language-based context group for fzf-lua-grep-context
+-- Predefined filetype-based context group for fzf-lua-grep-context
 
 ---@type ContextGroup
-local lang = {
-  title = "Launguages",
+local filetypes = {
+  title = "Filetypes",
   entries = {
     html = {
       label = "HTML",
@@ -273,4 +273,4 @@ local lang = {
   },
 }
 
-return lang
+return filetypes

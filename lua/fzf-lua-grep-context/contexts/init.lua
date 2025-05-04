@@ -23,7 +23,7 @@ function M.initialize_contexts(ctxs)
       title = "Default",
       entries = {},
     },
-    lang = require("fzf-lua-grep-context.contexts.lang"),
+    filetypes = require("fzf-lua-grep-context.contexts.filetypes"),
   }
 
   ctxs = ctxs or {}

@@ -1,8 +1,8 @@
 -- Manage persistent glob flag and separator via environment variables for fzf-lua grep context
 local M = {}
 
-local env_glob_flag = "FZF_LUA_GREP_CONTEXTS_GLOB_FLAG"
-local env_glob_separator = "FZF_LUA_GREP_CONTEXTS_GLOB_SEPARATOR"
+local env_glob_flag = "FZF_LUA_GREP_CONTEXT_GLOB_FLAG"
+local env_glob_separator = "FZF_LUA_GREP_CONTEXT_GLOB_SEPARATOR"
 
 ---Initialize and store glob flag and separator from fzf-lua options into environment variables
 function M.init()

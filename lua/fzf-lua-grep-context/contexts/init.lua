@@ -4,6 +4,8 @@ local M = {}
 
 ---@alias CurrentContextGroups table<string, ContextEntries>
 
+---@type string
+local env_current_contexts = "FZF_LUA_GREP_CONTEXT_CURRENT"
 ---@type ContextGroups
 local contexts = {}
 
@@ -58,29 +60,29 @@ end
 ---Set current active context groups in env variable
 ---@param ctxs CurrentContextGroups
 function M.initialize_current_contexts(ctxs)
-  vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT = vim.json.encode(ctxs)
+  vim.env[env_current_contexts] = vim.json.encode(ctxs)
 end
 
 ---Update current entries of a group
 ---@param group string
 ---@param entries ContextEntries
 function M.set_current_entries_by_group(group, entries)
-  local new = vim.json.decode(vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT)
+  local new = vim.json.decode(vim.env[env_current_contexts])
   new[group] = entries
-  vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT = vim.json.encode(new)
+  vim.env[env_current_contexts] = vim.json.encode(new)
 end
 
 ---Get current active context groups from env
 ---@return CurrentContextGroups
 function M.get_current_contexts()
-  return vim.json.decode(vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT)
+  return vim.json.decode(vim.env[env_current_contexts])
 end
 
 ---Get current entries of a group from env
 ---@param group string
 ---@return ContextEntries
 function M.get_current_entries_by_group(group)
-  local current = vim.json.decode(vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT)
+  local current = vim.json.decode(vim.env[env_current_contexts])
   return current[group] or {}
 end
 
@@ -88,7 +90,7 @@ end
 ---@param group string
 ---@return table<string, boolean>
 function M.get_current_key_set_by_group(group)
-  local current = vim.json.decode(vim.env.FZF_LUA_GREP_CONTEXTS_CURRENT)
+  local current = vim.json.decode(vim.env[env_current_contexts])
   return vim.iter(vim.tbl_keys(current[group] or {})):fold({}, function(acc, val)
     acc[val] = true
     return acc

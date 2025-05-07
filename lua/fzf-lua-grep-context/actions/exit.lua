@@ -14,8 +14,12 @@ local function exit()
     opts.query = state.resume_data.last_query
   else
     opts.query = state.resume_data.last_query
-    opts.search = nil
+    opts.search = nil -- Clear stale search query
   end
+
+  -- Add `resume = true` to mimic the behavior of `fzf-lua.resume()`.
+  -- This prevents double escaping of backslashes (e.g. `\b` -> `\\b`) in the query string by triggering special handling in `fzf.fzf_exec()`.
+  opts.resume = true
 
   fn(opts)
 

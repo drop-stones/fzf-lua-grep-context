@@ -28,9 +28,10 @@ function M.update()
       local icon, hl
       if state.items[entry.key].icon then
         icon, hl = state.items[entry.key].icon[1], state.items[entry.key].icon[2]
-      else
+      elseif state.items[entry.key].filetype then
         icon, hl = util.devicon(state.items[entry.key].filetype)
       end
+      icon = icon or " "
 
       -- Format line and collect highlights
       local line = string.format("%s%s %s %s", cursor, check, icon, entry.label)

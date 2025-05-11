@@ -2,6 +2,8 @@
 
 A Neovim plugin that extends [`fzf-lua`](https://github.com/ibhagwan/fzf-lua) with reusable, persistent grep context and a fuzzy-selectable UI for switching between them.
 
+![demo](https://raw.githubusercontent.com/wiki/drop-stones/fzf-lua-grep-context/demo.gif)
+
 ## ✨ Features
 
 - ⚙️ Define reusable grep contexts with flags, globs, and icons

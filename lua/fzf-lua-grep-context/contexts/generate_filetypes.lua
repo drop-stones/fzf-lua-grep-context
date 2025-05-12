@@ -11,39 +11,54 @@ local function get_rg_types()
   return output
 end
 
----@return table<string, boolean>
-local function get_valid_filetypes()
-  local filetypes = {}
-
-  local mini_icons = require("mini.icons")
-  for _, filetype in ipairs(mini_icons.list("filetype")) do
-    filetypes[filetype] = true
+---Extract simple extensions
+local function extract_safe_extensions(extlist)
+  local extensions = {}
+  for ext in extlist:gmatch("%*%.([%w_]+)") do
+    table.insert(extensions, ext)
   end
-
-  return filetypes
+  return extensions
 end
 
 ---@param output string
----@param valid_filetypes table<string, boolean>
 ---@return ContextEntries
-local function parse_rg_type_list(output, valid_filetypes)
+local function parse_rg_type_list(output)
   local result = {}
   for line in output:gmatch("[^\r\n]+") do
-    local name, extlist = line:match("([^:]+):%s*(.+)")
-    if name and extlist and valid_filetypes[name] then
-      local entry = {
-        label = name, -- use lowercase label
-        filetype = name,
-        commands = {
-          rg = { flags = { "--type", name } },
-          git_grep = { globs = {} },
-        },
-      }
-      for ext in extlist:gmatch("%S+") do
-        ext = ext:gsub(",$", "") -- remove trailing comma
-        table.insert(entry.commands.git_grep.globs, ext)
+    local filetype, extlist = line:match("([^:]+):%s*(.+)")
+    if filetype and extlist then
+      local safe_exts = extract_safe_extensions(extlist)
+      local icon, hl = require("nvim-web-devicons").get_icon_by_filetype(filetype)
+      local valid_filetype = (icon and true) or false
+      local icon, hl
+      if not icon then
+        for _, ext in ipairs(safe_exts) do
+          icon, hl = require("nvim-web-devicons").get_icon(nil, ext)
+          if icon then
+            print("icon: " .. icon)
+            break
+          end
+        end
       end
-      result[name] = entry
+
+      if not icon then
+        print("skip " .. filetype)
+      else
+        local entry = {
+          label = filetype, -- use lowercase label
+          filetype = valid_filetype and filetype,
+          icon = not valid_filetype and { icon, hl },
+          commands = {
+            rg = { flags = { "--type", filetype } },
+            git_grep = { globs = {} },
+          },
+        }
+        for ext in extlist:gmatch("%S+") do
+          ext = ext:gsub(",$", "") -- remove trailing comma
+          table.insert(entry.commands.git_grep.globs, ext)
+        end
+        result[filetype] = entry
+      end
     end
   end
   return result
@@ -75,7 +90,11 @@ local function write_lua_table(tbl, filepath)
     local entry = tbl[name]
     file:write(string.format("    %s = {\n", name))
     file:write(string.format('      label = "%s",\n', entry.label))
-    file:write(string.format('      filetype = "%s",\n', entry.filetype))
+    if entry.icon then
+      file:write(string.format('      icon = { "%s", "%s" },\n', entry.icon[1], entry.icon[2]))
+    elseif entry.filetype then
+      file:write(string.format('      filetype = "%s",\n', entry.filetype))
+    end
     file:write("      commands = {\n")
     file:write(string.format('        rg = { flags = { "--type", "%s" } },\n', name))
     local globs = entry.commands.git_grep.globs or {}
@@ -101,7 +120,6 @@ end
 
 -- Main
 local rg_output = get_rg_types()
-local valid_filetypes = get_valid_filetypes()
-local parsed = parse_rg_type_list(rg_output, valid_filetypes)
+local parsed = parse_rg_type_list(rg_output)
 write_lua_table(parsed, "filetypes.lua")
 print("filetypes.lua written with " .. tostring(#vim.tbl_keys(parsed)) .. " entries.\n")

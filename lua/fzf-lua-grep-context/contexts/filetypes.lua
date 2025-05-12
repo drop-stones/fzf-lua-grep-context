@@ -18,17 +18,22 @@ return {
         },
       },
     },
-    aidl = {
-      label = "aidl",
-      filetype = "aidl",
+    amake = {
+      label = "amake",
+      icon = { "", "DevIconMakefile" },
       commands = {
-        rg = { flags = { "--type", "aidl" } },
-        git_grep = { globs = { "*.aidl" } },
+        rg = { flags = { "--type", "amake" } },
+        git_grep = {
+          globs = {
+            "*.bp",
+            "*.mk",
+          },
+        },
       },
     },
     asciidoc = {
       label = "asciidoc",
-      filetype = "asciidoc",
+      icon = { "󰦝", "DevIconAsc" },
       commands = {
         rg = { flags = { "--type", "asciidoc" } },
         git_grep = {
@@ -64,15 +69,42 @@ return {
     },
     bat = {
       label = "bat",
-      filetype = "bat",
+      icon = { "", "DevIconBat" },
       commands = {
         rg = { flags = { "--type", "bat" } },
         git_grep = { globs = { "*.bat" } },
       },
     },
+    batch = {
+      label = "batch",
+      icon = { "", "DevIconBat" },
+      commands = {
+        rg = { flags = { "--type", "batch" } },
+        git_grep = { globs = { "*.bat" } },
+      },
+    },
+    bazel = {
+      label = "bazel",
+      icon = { "", "DevIconBazel" },
+      commands = {
+        rg = { flags = { "--type", "bazel" } },
+        git_grep = {
+          globs = {
+            "*.BUILD",
+            "*.bazel",
+            "*.bazelrc",
+            "*.bzl",
+            "BUILD",
+            "MODULE.bazel",
+            "WORKSPACE",
+            "WORKSPACE.bazel",
+          },
+        },
+      },
+    },
     bitbake = {
       label = "bitbake",
-      filetype = "bitbake",
+      icon = { "", "DevIconConf" },
       commands = {
         rg = { flags = { "--type", "bitbake" } },
         git_grep = {
@@ -86,26 +118,17 @@ return {
         },
       },
     },
-    c = {
-      label = "c",
-      filetype = "c",
+    bzip2 = {
+      label = "bzip2",
+      icon = { "", "DevIconBz2" },
       commands = {
-        rg = { flags = { "--type", "c" } },
+        rg = { flags = { "--type", "bzip2" } },
         git_grep = {
           globs = {
-            "*.[chH]",
-            "*.[chH].in",
-            "*.cats",
+            "*.bz2",
+            "*.tbz2",
           },
         },
-      },
-    },
-    cabal = {
-      label = "cabal",
-      filetype = "cabal",
-      commands = {
-        rg = { flags = { "--type", "cabal" } },
-        git_grep = { globs = { "*.cabal" } },
       },
     },
     clojure = {
@@ -136,9 +159,30 @@ return {
         },
       },
     },
+    cmd = {
+      label = "cmd",
+      icon = { "", "DevIconBat" },
+      commands = {
+        rg = { flags = { "--type", "cmd" } },
+        git_grep = {
+          globs = {
+            "*.bat",
+            "*.cmd",
+          },
+        },
+      },
+    },
+    coffeescript = {
+      label = "coffeescript",
+      icon = { "", "DevIconCoffee" },
+      commands = {
+        rg = { flags = { "--type", "coffeescript" } },
+        git_grep = { globs = { "*.coffee" } },
+      },
+    },
     config = {
       label = "config",
-      filetype = "config",
+      icon = { "", "DevIconConfiguration" },
       commands = {
         rg = { flags = { "--type", "config" } },
         git_grep = {
@@ -153,7 +197,7 @@ return {
     },
     coq = {
       label = "coq",
-      filetype = "coq",
+      icon = { "󰍛", "DevIconVerilog" },
       commands = {
         rg = { flags = { "--type", "coq" } },
         git_grep = { globs = { "*.v" } },
@@ -183,7 +227,7 @@ return {
     },
     crystal = {
       label = "crystal",
-      filetype = "crystal",
+      icon = { "", "DevIconCrystal" },
       commands = {
         rg = { flags = { "--type", "crystal" } },
         git_grep = {
@@ -202,6 +246,30 @@ return {
       commands = {
         rg = { flags = { "--type", "cs" } },
         git_grep = { globs = { "*.cs" } },
+      },
+    },
+    csharp = {
+      label = "csharp",
+      icon = { "󰌛", "DevIconCs" },
+      commands = {
+        rg = { flags = { "--type", "csharp" } },
+        git_grep = { globs = { "*.cs" } },
+      },
+    },
+    cshtml = {
+      label = "cshtml",
+      icon = { "󱦗", "DevIconRazorPage" },
+      commands = {
+        rg = { flags = { "--type", "cshtml" } },
+        git_grep = { globs = { "*.cshtml" } },
+      },
+    },
+    csproj = {
+      label = "csproj",
+      icon = { "󰪮", "DevIconCSharpProject" },
+      commands = {
+        rg = { flags = { "--type", "csproj" } },
+        git_grep = { globs = { "*.csproj" } },
       },
     },
     css = {
@@ -238,6 +306,20 @@ return {
         },
       },
     },
+    cython = {
+      label = "cython",
+      icon = { "", "DevIconPxd" },
+      commands = {
+        rg = { flags = { "--type", "cython" } },
+        git_grep = {
+          globs = {
+            "*.pxd",
+            "*.pxi",
+            "*.pyx",
+          },
+        },
+      },
+    },
     d = {
       label = "d",
       filetype = "d",
@@ -254,14 +336,6 @@ return {
         git_grep = { globs = { "*.dart" } },
       },
     },
-    dhall = {
-      label = "dhall",
-      filetype = "dhall",
-      commands = {
-        rg = { flags = { "--type", "dhall" } },
-        git_grep = { globs = { "*.dhall" } },
-      },
-    },
     diff = {
       label = "diff",
       filetype = "diff",
@@ -275,17 +349,46 @@ return {
         },
       },
     },
-    dts = {
-      label = "dts",
-      filetype = "dts",
+    dockercompose = {
+      label = "dockercompose",
+      icon = { "", "DevIconYml" },
       commands = {
-        rg = { flags = { "--type", "dts" } },
+        rg = { flags = { "--type", "dockercompose" } },
         git_grep = {
           globs = {
-            "*.dts",
-            "*.dtsi",
+            "docker-compose.*.yml",
+            "docker-compose.yml",
           },
         },
+      },
+    },
+    ebuild = {
+      label = "ebuild",
+      icon = { "", "DevIconGentooBuild" },
+      commands = {
+        rg = { flags = { "--type", "ebuild" } },
+        git_grep = {
+          globs = {
+            "*.ebuild",
+            "*.eclass",
+          },
+        },
+      },
+    },
+    edn = {
+      label = "edn",
+      icon = { "", "DevIconEdn" },
+      commands = {
+        rg = { flags = { "--type", "edn" } },
+        git_grep = { globs = { "*.edn" } },
+      },
+    },
+    elisp = {
+      label = "elisp",
+      icon = { "", "DevIconElisp" },
+      commands = {
+        rg = { flags = { "--type", "elisp" } },
+        git_grep = { globs = { "*.el" } },
       },
     },
     elixir = {
@@ -311,6 +414,14 @@ return {
       commands = {
         rg = { flags = { "--type", "elm" } },
         git_grep = { globs = { "*.elm" } },
+      },
+    },
+    erb = {
+      label = "erb",
+      icon = { "", "DevIconErb" },
+      commands = {
+        rg = { flags = { "--type", "erb" } },
+        git_grep = { globs = { "*.erb" } },
       },
     },
     erlang = {
@@ -376,15 +487,18 @@ return {
         },
       },
     },
-    gn = {
-      label = "gn",
-      filetype = "gn",
+    gap = {
+      label = "gap",
+      icon = { "", "DevIconGDScript" },
       commands = {
-        rg = { flags = { "--type", "gn" } },
+        rg = { flags = { "--type", "gap" } },
         git_grep = {
           globs = {
-            "*.gn",
-            "*.gni",
+            "*.g",
+            "*.gap",
+            "*.gd",
+            "*.gi",
+            "*.tst",
           },
         },
       },
@@ -395,6 +509,31 @@ return {
       commands = {
         rg = { flags = { "--type", "go" } },
         git_grep = { globs = { "*.go" } },
+      },
+    },
+    gprbuild = {
+      label = "gprbuild",
+      icon = { "", "DevIconGPRBuildProject" },
+      commands = {
+        rg = { flags = { "--type", "gprbuild" } },
+        git_grep = { globs = { "*.gpr" } },
+      },
+    },
+    gradle = {
+      label = "gradle",
+      icon = { "", "DevIconGradle" },
+      commands = {
+        rg = { flags = { "--type", "gradle" } },
+        git_grep = {
+          globs = {
+            "*.gradle",
+            "*.gradle.kts",
+            "gradle-wrapper.*",
+            "gradle.properties",
+            "gradlew",
+            "gradlew.bat",
+          },
+        },
       },
     },
     graphql = {
@@ -423,20 +562,39 @@ return {
         },
       },
     },
+    gzip = {
+      label = "gzip",
+      icon = { "", "DevIconGz" },
+      commands = {
+        rg = { flags = { "--type", "gzip" } },
+        git_grep = {
+          globs = {
+            "*.gz",
+            "*.tgz",
+          },
+        },
+      },
+    },
+    h = {
+      label = "h",
+      icon = { "", "DevIconH" },
+      commands = {
+        rg = { flags = { "--type", "h" } },
+        git_grep = {
+          globs = {
+            "*.h",
+            "*.hh",
+            "*.hpp",
+          },
+        },
+      },
+    },
     haml = {
       label = "haml",
       filetype = "haml",
       commands = {
         rg = { flags = { "--type", "haml" } },
         git_grep = { globs = { "*.haml" } },
-      },
-    },
-    hare = {
-      label = "hare",
-      filetype = "hare",
-      commands = {
-        rg = { flags = { "--type", "hare" } },
-        git_grep = { globs = { "*.ha" } },
       },
     },
     haskell = {
@@ -450,6 +608,27 @@ return {
             "*.cpphs",
             "*.hs",
             "*.hsc",
+            "*.lhs",
+          },
+        },
+      },
+    },
+    hbs = {
+      label = "hbs",
+      filetype = "hbs",
+      commands = {
+        rg = { flags = { "--type", "hbs" } },
+        git_grep = { globs = { "*.hbs" } },
+      },
+    },
+    hs = {
+      label = "hs",
+      icon = { "", "DevIconHs" },
+      commands = {
+        rg = { flags = { "--type", "hs" } },
+        git_grep = {
+          globs = {
+            "*.hs",
             "*.lhs",
           },
         },
@@ -469,14 +648,6 @@ return {
         },
       },
     },
-    janet = {
-      label = "janet",
-      filetype = "janet",
-      commands = {
-        rg = { flags = { "--type", "janet" } },
-        git_grep = { globs = { "*.janet" } },
-      },
-    },
     java = {
       label = "java",
       filetype = "java",
@@ -492,16 +663,26 @@ return {
         },
       },
     },
-    jinja = {
-      label = "jinja",
-      filetype = "jinja",
+    jl = {
+      label = "jl",
+      icon = { "", "DevIconJl" },
       commands = {
-        rg = { flags = { "--type", "jinja" } },
+        rg = { flags = { "--type", "jl" } },
+        git_grep = { globs = { "*.jl" } },
+      },
+    },
+    js = {
+      label = "js",
+      icon = { "", "DevIconCjs" },
+      commands = {
+        rg = { flags = { "--type", "js" } },
         git_grep = {
           globs = {
-            "*.j2",
-            "*.jinja",
-            "*.jinja2",
+            "*.cjs",
+            "*.js",
+            "*.jsx",
+            "*.mjs",
+            "*.vue",
           },
         },
       },
@@ -520,20 +701,25 @@ return {
         },
       },
     },
-    jsonl = {
-      label = "jsonl",
-      filetype = "jsonl",
-      commands = {
-        rg = { flags = { "--type", "jsonl" } },
-        git_grep = { globs = { "*.jsonl" } },
-      },
-    },
     julia = {
       label = "julia",
       filetype = "julia",
       commands = {
         rg = { flags = { "--type", "julia" } },
         git_grep = { globs = { "*.jl" } },
+      },
+    },
+    jupyter = {
+      label = "jupyter",
+      icon = { "", "DevIconNotebook" },
+      commands = {
+        rg = { flags = { "--type", "jupyter" } },
+        git_grep = {
+          globs = {
+            "*.ipynb",
+            "*.jpynb",
+          },
+        },
       },
     },
     kotlin = {
@@ -549,14 +735,6 @@ return {
         },
       },
     },
-    lean = {
-      label = "lean",
-      filetype = "lean",
-      commands = {
-        rg = { flags = { "--type", "lean" } },
-        git_grep = { globs = { "*.lean" } },
-      },
-    },
     less = {
       label = "less",
       filetype = "less",
@@ -565,22 +743,9 @@ return {
         git_grep = { globs = { "*.less" } },
       },
     },
-    lilypond = {
-      label = "lilypond",
-      filetype = "lilypond",
-      commands = {
-        rg = { flags = { "--type", "lilypond" } },
-        git_grep = {
-          globs = {
-            "*.ily",
-            "*.ly",
-          },
-        },
-      },
-    },
     lisp = {
       label = "lisp",
-      filetype = "lisp",
+      icon = { "", "DevIconElisp" },
       commands = {
         rg = { flags = { "--type", "lisp" } },
         git_grep = {
@@ -595,25 +760,33 @@ return {
         },
       },
     },
+    lock = {
+      label = "lock",
+      filetype = "lock",
+      commands = {
+        rg = { flags = { "--type", "lock" } },
+        git_grep = {
+          globs = {
+            "*.lock",
+            "package-lock.json",
+          },
+        },
+      },
+    },
+    log = {
+      label = "log",
+      filetype = "log",
+      commands = {
+        rg = { flags = { "--type", "log" } },
+        git_grep = { globs = { "*.log" } },
+      },
+    },
     lua = {
       label = "lua",
       filetype = "lua",
       commands = {
         rg = { flags = { "--type", "lua" } },
         git_grep = { globs = { "*.lua" } },
-      },
-    },
-    m4 = {
-      label = "m4",
-      filetype = "m4",
-      commands = {
-        rg = { flags = { "--type", "m4" } },
-        git_grep = {
-          globs = {
-            "*.ac",
-            "*.m4",
-          },
-        },
       },
     },
     make = {
@@ -631,19 +804,6 @@ return {
             "[Mm]akefile",
             "[Mm]akefile.am",
             "[Mm]akefile.in",
-          },
-        },
-      },
-    },
-    man = {
-      label = "man",
-      filetype = "man",
-      commands = {
-        rg = { flags = { "--type", "man" } },
-        git_grep = {
-          globs = {
-            "*.[0-9][cEFMmpSx]",
-            "*.[0-9lnpx]",
           },
         },
       },
@@ -668,22 +828,68 @@ return {
     },
     matlab = {
       label = "matlab",
-      filetype = "matlab",
+      icon = { "", "DevIconObjectiveC" },
       commands = {
         rg = { flags = { "--type", "matlab" } },
         git_grep = { globs = { "*.m" } },
       },
     },
-    meson = {
-      label = "meson",
-      filetype = "meson",
+    md = {
+      label = "md",
+      icon = { "", "DevIconMarkdown" },
       commands = {
-        rg = { flags = { "--type", "meson" } },
+        rg = { flags = { "--type", "md" } },
         git_grep = {
           globs = {
-            "meson.build",
-            "meson.options",
-            "meson_options.txt",
+            "*.markdown",
+            "*.md",
+            "*.mdown",
+            "*.mdwn",
+            "*.mdx",
+            "*.mkd",
+            "*.mkdn",
+          },
+        },
+      },
+    },
+    mint = {
+      label = "mint",
+      filetype = "mint",
+      commands = {
+        rg = { flags = { "--type", "mint" } },
+        git_grep = { globs = { "*.mint" } },
+      },
+    },
+    ml = {
+      label = "ml",
+      icon = { "", "DevIconMl" },
+      commands = {
+        rg = { flags = { "--type", "ml" } },
+        git_grep = { globs = { "*.ml" } },
+      },
+    },
+    motoko = {
+      label = "motoko",
+      filetype = "motoko",
+      commands = {
+        rg = { flags = { "--type", "motoko" } },
+        git_grep = { globs = { "*.mo" } },
+      },
+    },
+    msbuild = {
+      label = "msbuild",
+      icon = { "󰪮", "DevIconCSharpProject" },
+      commands = {
+        rg = { flags = { "--type", "msbuild" } },
+        git_grep = {
+          globs = {
+            "*.csproj",
+            "*.fsproj",
+            "*.proj",
+            "*.props",
+            "*.sln",
+            "*.targets",
+            "*.vcxproj",
           },
         },
       },
@@ -713,7 +919,7 @@ return {
     },
     objc = {
       label = "objc",
-      filetype = "objc",
+      icon = { "", "DevIconH" },
       commands = {
         rg = { flags = { "--type", "objc" } },
         git_grep = {
@@ -726,7 +932,7 @@ return {
     },
     objcpp = {
       label = "objcpp",
-      filetype = "objcpp",
+      icon = { "", "DevIconH" },
       commands = {
         rg = { flags = { "--type", "objcpp" } },
         git_grep = {
@@ -767,7 +973,7 @@ return {
     },
     pascal = {
       label = "pascal",
-      filetype = "pascal",
+      icon = { "", "DevIconPp" },
       commands = {
         rg = { flags = { "--type", "pascal" } },
         git_grep = {
@@ -834,14 +1040,6 @@ return {
         git_grep = { globs = { "*.po" } },
       },
     },
-    pod = {
-      label = "pod",
-      filetype = "pod",
-      commands = {
-        rg = { flags = { "--type", "pod" } },
-        git_grep = { globs = { "*.pod" } },
-      },
-    },
     prolog = {
       label = "prolog",
       filetype = "prolog",
@@ -853,6 +1051,22 @@ return {
             "*.pl",
             "*.pro",
             "*.prolog",
+          },
+        },
+      },
+    },
+    ps = {
+      label = "ps",
+      icon = { "󰨊", "DevIconPsScriptfile" },
+      commands = {
+        rg = { flags = { "--type", "ps" } },
+        git_grep = {
+          globs = {
+            "*.cdxml",
+            "*.ps1",
+            "*.ps1xml",
+            "*.psd1",
+            "*.psm1",
           },
         },
       },
@@ -872,6 +1086,19 @@ return {
         },
       },
     },
+    py = {
+      label = "py",
+      icon = { "", "DevIconPy" },
+      commands = {
+        rg = { flags = { "--type", "py" } },
+        git_grep = {
+          globs = {
+            "*.py",
+            "*.pyi",
+          },
+        },
+      },
+    },
     python = {
       label = "python",
       filetype = "python",
@@ -881,6 +1108,20 @@ return {
           globs = {
             "*.py",
             "*.pyi",
+          },
+        },
+      },
+    },
+    qmake = {
+      label = "qmake",
+      icon = { "", "DevIconProlog" },
+      commands = {
+        rg = { flags = { "--type", "qmake" } },
+        git_grep = {
+          globs = {
+            "*.prf",
+            "*.pri",
+            "*.pro",
           },
         },
       },
@@ -908,35 +1149,23 @@ return {
         },
       },
     },
-    racket = {
-      label = "racket",
-      filetype = "racket",
+    red = {
+      label = "red",
+      icon = { "󰟔", "DevIconR" },
       commands = {
-        rg = { flags = { "--type", "racket" } },
-        git_grep = { globs = { "*.rkt" } },
-      },
-    },
-    raku = {
-      label = "raku",
-      filetype = "raku",
-      commands = {
-        rg = { flags = { "--type", "raku" } },
+        rg = { flags = { "--type", "red" } },
         git_grep = {
           globs = {
-            "*.p6",
-            "*.pl6",
-            "*.pm6",
-            "*.raku",
-            "*.rakudoc",
-            "*.rakumod",
-            "*.rakutest",
+            "*.r",
+            "*.red",
+            "*.reds",
           },
         },
       },
     },
     rescript = {
       label = "rescript",
-      filetype = "rescript",
+      icon = { "", "DevIconReScript" },
       commands = {
         rg = { flags = { "--type", "rescript" } },
         git_grep = {
@@ -945,22 +1174,6 @@ return {
             "*.resi",
           },
         },
-      },
-    },
-    robot = {
-      label = "robot",
-      filetype = "robot",
-      commands = {
-        rg = { flags = { "--type", "robot" } },
-        git_grep = { globs = { "*.robot" } },
-      },
-    },
-    rst = {
-      label = "rst",
-      filetype = "rst",
-      commands = {
-        rg = { flags = { "--type", "rst" } },
-        git_grep = { globs = { "*.rst" } },
       },
     },
     ruby = {
@@ -1060,12 +1273,18 @@ return {
         },
       },
     },
-    smarty = {
-      label = "smarty",
-      filetype = "smarty",
+    slim = {
+      label = "slim",
+      filetype = "slim",
       commands = {
-        rg = { flags = { "--type", "smarty" } },
-        git_grep = { globs = { "*.tpl" } },
+        rg = { flags = { "--type", "slim" } },
+        git_grep = {
+          globs = {
+            "*.skim",
+            "*.slim",
+            "*.slime",
+          },
+        },
       },
     },
     sml = {
@@ -1089,14 +1308,6 @@ return {
         git_grep = { globs = { "*.sol" } },
       },
     },
-    spec = {
-      label = "spec",
-      filetype = "spec",
-      commands = {
-        rg = { flags = { "--type", "spec" } },
-        git_grep = { globs = { "*.spec" } },
-      },
-    },
     sql = {
       label = "sql",
       filetype = "sql",
@@ -1112,10 +1323,26 @@ return {
     },
     stylus = {
       label = "stylus",
-      filetype = "stylus",
+      icon = { "", "DevIconStyl" },
       commands = {
         rg = { flags = { "--type", "stylus" } },
         git_grep = { globs = { "*.styl" } },
+      },
+    },
+    sv = {
+      label = "sv",
+      icon = { "", "DevIconH" },
+      commands = {
+        rg = { flags = { "--type", "sv" } },
+        git_grep = {
+          globs = {
+            "*.h",
+            "*.sv",
+            "*.svh",
+            "*.v",
+            "*.vg",
+          },
+        },
       },
     },
     svelte = {
@@ -1142,22 +1369,9 @@ return {
         git_grep = { globs = { "*.swift" } },
       },
     },
-    swig = {
-      label = "swig",
-      filetype = "swig",
-      commands = {
-        rg = { flags = { "--type", "swig" } },
-        git_grep = {
-          globs = {
-            "*.def",
-            "*.i",
-          },
-        },
-      },
-    },
     systemd = {
       label = "systemd",
-      filetype = "systemd",
+      icon = { "", "DevIconConf" },
       commands = {
         rg = { flags = { "--type", "systemd" } },
         git_grep = {
@@ -1205,14 +1419,6 @@ return {
         },
       },
     },
-    texinfo = {
-      label = "texinfo",
-      filetype = "texinfo",
-      commands = {
-        rg = { flags = { "--type", "texinfo" } },
-        git_grep = { globs = { "*.texi" } },
-      },
-    },
     tf = {
       label = "tf",
       filetype = "tf",
@@ -1234,14 +1440,6 @@ return {
         },
       },
     },
-    thrift = {
-      label = "thrift",
-      filetype = "thrift",
-      commands = {
-        rg = { flags = { "--type", "thrift" } },
-        git_grep = { globs = { "*.thrift" } },
-      },
-    },
     toml = {
       label = "toml",
       filetype = "toml",
@@ -1255,12 +1453,35 @@ return {
         },
       },
     },
+    ts = {
+      label = "ts",
+      icon = { "", "DevIconCts" },
+      commands = {
+        rg = { flags = { "--type", "ts" } },
+        git_grep = {
+          globs = {
+            "*.cts",
+            "*.mts",
+            "*.ts",
+            "*.tsx",
+          },
+        },
+      },
+    },
     twig = {
       label = "twig",
       filetype = "twig",
       commands = {
         rg = { flags = { "--type", "twig" } },
         git_grep = { globs = { "*.twig" } },
+      },
+    },
+    txt = {
+      label = "txt",
+      filetype = "txt",
+      commands = {
+        rg = { flags = { "--type", "txt" } },
+        git_grep = { globs = { "*.txt" } },
       },
     },
     typescript = {
@@ -1278,23 +1499,22 @@ return {
         },
       },
     },
-    usd = {
-      label = "usd",
-      filetype = "usd",
+    typoscript = {
+      label = "typoscript",
+      icon = { "", "DevIconTypeScript" },
       commands = {
-        rg = { flags = { "--type", "usd" } },
+        rg = { flags = { "--type", "typoscript" } },
         git_grep = {
           globs = {
-            "*.usd",
-            "*.usda",
-            "*.usdc",
+            "*.ts",
+            "*.typoscript",
           },
         },
       },
     },
     v = {
       label = "v",
-      filetype = "v",
+      icon = { "󰍛", "DevIconVerilog" },
       commands = {
         rg = { flags = { "--type", "v" } },
         git_grep = {
@@ -1311,14 +1531,6 @@ return {
       commands = {
         rg = { flags = { "--type", "vala" } },
         git_grep = { globs = { "*.vala" } },
-      },
-    },
-    vb = {
-      label = "vb",
-      filetype = "vb",
-      commands = {
-        rg = { flags = { "--type", "vb" } },
-        git_grep = { globs = { "*.vb" } },
       },
     },
     verilog = {
@@ -1367,20 +1579,30 @@ return {
         },
       },
     },
+    vimscript = {
+      label = "vimscript",
+      icon = { "", "DevIconVim" },
+      commands = {
+        rg = { flags = { "--type", "vimscript" } },
+        git_grep = {
+          globs = {
+            "*.vim",
+            ".gvimrc",
+            ".vimrc",
+            "_gvimrc",
+            "_vimrc",
+            "gvimrc",
+            "vimrc",
+          },
+        },
+      },
+    },
     vue = {
       label = "vue",
       filetype = "vue",
       commands = {
         rg = { flags = { "--type", "vue" } },
         git_grep = { globs = { "*.vue" } },
-      },
-    },
-    wgsl = {
-      label = "wgsl",
-      filetype = "wgsl",
-      commands = {
-        rg = { flags = { "--type", "wgsl" } },
-        git_grep = { globs = { "*.wgsl" } },
       },
     },
     xml = {
@@ -1404,12 +1626,17 @@ return {
         },
       },
     },
-    yacc = {
-      label = "yacc",
-      filetype = "yacc",
+    xz = {
+      label = "xz",
+      icon = { "", "DevIconTxz" },
       commands = {
-        rg = { flags = { "--type", "yacc" } },
-        git_grep = { globs = { "*.y" } },
+        rg = { flags = { "--type", "xz" } },
+        git_grep = {
+          globs = {
+            "*.txz",
+            "*.xz",
+          },
+        },
       },
     },
     yaml = {
@@ -1423,14 +1650,6 @@ return {
             "*.yml",
           },
         },
-      },
-    },
-    yang = {
-      label = "yang",
-      filetype = "yang",
-      commands = {
-        rg = { flags = { "--type", "yang" } },
-        git_grep = { globs = { "*.yang" } },
       },
     },
     zig = {
@@ -1459,6 +1678,19 @@ return {
             "zprofile",
             "zshenv",
             "zshrc",
+          },
+        },
+      },
+    },
+    zstd = {
+      label = "zstd",
+      icon = { "", "DevIconZst" },
+      commands = {
+        rg = { flags = { "--type", "zstd" } },
+        git_grep = {
+          globs = {
+            "*.zst",
+            "*.zstd",
           },
         },
       },

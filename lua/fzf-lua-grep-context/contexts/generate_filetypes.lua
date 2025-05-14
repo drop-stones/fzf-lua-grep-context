@@ -30,12 +30,13 @@ local function parse_rg_type_list(output)
       local safe_exts = extract_safe_extensions(extlist)
       local icon, hl = require("nvim-web-devicons").get_icon_by_filetype(filetype)
       local valid_filetype = (icon and true) or false
-      local icon, hl
+      local icon, hl, extension
       if not icon then
         for _, ext in ipairs(safe_exts) do
           icon, hl = require("nvim-web-devicons").get_icon(nil, ext)
           if icon then
             print("icon: " .. icon)
+            extension = ext
             break
           end
         end
@@ -47,7 +48,7 @@ local function parse_rg_type_list(output)
         local entry = {
           label = filetype, -- use lowercase label
           filetype = valid_filetype and filetype,
-          icon = not valid_filetype and { icon, hl },
+          extension = icon and extension,
           commands = {
             rg = { flags = { "--type", filetype } },
             git_grep = { globs = {} },
@@ -90,10 +91,11 @@ local function write_lua_table(tbl, filepath)
     local entry = tbl[name]
     file:write(string.format("    %s = {\n", name))
     file:write(string.format('      label = "%s",\n', entry.label))
-    if entry.icon then
-      file:write(string.format('      icon = { "%s", "%s" },\n', entry.icon[1], entry.icon[2]))
-    elseif entry.filetype then
+    if entry.filetype then
       file:write(string.format('      filetype = "%s",\n', entry.filetype))
+    end
+    if entry.extension then
+      file:write(string.format('      extension = "%s",\n', entry.extension))
     end
     file:write("      commands = {\n")
     file:write(string.format('        rg = { flags = { "--type", "%s" } },\n', name))

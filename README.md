@@ -17,9 +17,7 @@ A Neovim plugin that extends [`fzf-lua`](https://github.com/ibhagwan/fzf-lua) wi
 - Neovim >= 0.10.0
 - [fzf-lua](https://github.com/ibhagwan/fzf-lua)
 - [nui.nvim](https://github.com/MunifTanjim/nui.nvim)
-- (Optional) Icon Support:
-  - [nvim-web-devicon](https://github.com/nvim-tree/nvim-web-devicons)
-  - [mini-icons](https://github.com/echasnovski/mini.icons)
+- (Optional) Icon Support: [nvim-web-devicon](https://github.com/nvim-tree/nvim-web-devicons)
 
 ## 📦 Installation
 
@@ -207,15 +205,15 @@ Each entry in `entries` defines how grep commands should behave for a specific t
 | Key | Type | Description |
 | --- | ---- | ----------- |
 | `label` | `string` | Display name shown in the picker |
-| `filetype` | `string?` | Used to fetch icon from `nvim-web-devicon`/`mini-icons` |
-| `extension` | `string?` | Used to fetch icon from `nvim-web-devicon`/`mini-icons` |
+| `filetype` | `string?` | Used to fetch icon from `nvim-web-devicon` |
+| `extension` | `string?` | Used to fetch icon from `nvim-web-devicon` |
 | `icon` | `{ [1]: string, [2]: string}?` | Override the icon symbol (`[1]`) and its highlight group (`[2]`) |
 | `flags` | `string[]?` | Extra flags passed to all commands unless overridden |
 | `globs` | `string[]?` | Glob patterns to filter files |
 | `commands` | `table<string, { flags?: string[], globs?: string[] }>?` | Per-command override for `flags` and `globs` |
 
 > [!WARNING]
-> If both `icon` and `filetype` are provided, the `icon` takes precedence.
+> If both `icon` and `filetype`/`extension` are provided, the `icon` takes precedence.
 
 Example:
 
@@ -224,7 +222,8 @@ entries = {
   lua = {
     label = "Lua",
     filetype = "lua",
-    -- icon = { "", "DevIconLua" or "MiniIconsAzure" },
+    -- extension = "lua",
+    -- icon = { "", "DevIconLua" },
     commands = {
       rg = { flags = { "--type", "lua" } },
       git_grep = { globs = { "*.lua" } },

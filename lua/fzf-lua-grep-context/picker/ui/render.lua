@@ -28,8 +28,8 @@ function M.update()
       local icon, hl
       if state.items[entry.key].icon then
         icon, hl = state.items[entry.key].icon[1], state.items[entry.key].icon[2]
-      elseif state.items[entry.key].filetype then
-        icon, hl = util.devicon(state.items[entry.key].filetype)
+      elseif state.items[entry.key].filetype or state.items[entry.key].extension then
+        icon, hl = util.devicon({ filetype = state.items[entry.key].filetype, extension = state.items[entry.key].extension })
       end
       icon = icon or " "
 

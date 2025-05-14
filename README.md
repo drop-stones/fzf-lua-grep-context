@@ -208,6 +208,7 @@ Each entry in `entries` defines how grep commands should behave for a specific t
 | --- | ---- | ----------- |
 | `label` | `string` | Display name shown in the picker |
 | `filetype` | `string?` | Used to fetch icon from `nvim-web-devicon`/`mini-icons` |
+| `extension` | `string?` | Used to fetch icon from `nvim-web-devicon`/`mini-icons` |
 | `icon` | `{ [1]: string, [2]: string}?` | Override the icon symbol (`[1]`) and its highlight group (`[2]`) |
 | `flags` | `string[]?` | Extra flags passed to all commands unless overridden |
 | `globs` | `string[]?` | Glob patterns to filter files |

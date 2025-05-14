@@ -19,13 +19,22 @@ end
 ---Initialize context groups
 ---@param ctxs? ContextGroups | ContextGroup
 function M.initialize_contexts(ctxs)
+  local entries = {}
+  for key, entry in pairs(require("fzf-lua-grep-context.contexts.filetypes").entries) do
+    local icon, _ = require("fzf-lua-grep-context.util").devicon({ filetype = entry.filetype, extension = entry.extension })
+    if icon then
+      entries[key] = entry
+    end
+  end
+  local filetypes = { title = require("fzf-lua-grep-context.contexts.filetypes").title, entries = entries }
+
   ---@type ContextGroups
   local default = {
     default = {
       title = "Default",
       entries = {},
     },
-    filetypes = require("fzf-lua-grep-context.contexts.filetypes"),
+    filetypes = filetypes,
   }
 
   ctxs = ctxs or {}

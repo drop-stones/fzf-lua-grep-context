@@ -22,7 +22,8 @@ function M.update()
     -- Build each line with icon, label, checkmark
     for _, entry in ipairs(state.filtered) do
       local cursor = "  "
-      local check = state.selected[entry.key] and "[x]" or "[ ]"
+      local mark = require("fzf-lua-grep-context.picker.options").checkbox.mark ---@type string
+      local check = (state.selected[entry.key] and "[" .. mark .. "]") or ("[" .. string.rep(" ", vim.fn.strdisplaywidth(mark)) .. "]")
 
       -- Get icon and highlight group
       local icon, hl
@@ -38,7 +39,16 @@ function M.update()
       line = pad_to_width(line)
       table.insert(lines, line)
 
-      local icon_start = #cursor + #check + 1
+      local check_start = #cursor
+      local check_end = check_start + #check
+      table.insert(highlights, {
+        hl_group = "FzfLuaGrepContextCheckMark",
+        line = #lines - 1, -- 0-indexed
+        col_start = check_start + 1,
+        col_end = check_start + #check - 1,
+      })
+
+      local icon_start = check_end + 1
       local icon_end = icon_start + #icon
       table.insert(highlights, {
         hl_group = hl,

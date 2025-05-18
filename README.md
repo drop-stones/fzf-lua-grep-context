@@ -118,6 +118,10 @@ Expand to see the list of all the default options below.
       { "q", function() require("fzf-lua-grep-context.actions").exit() end, mode = "n" },
     },
   },
+  checkbox = {
+    mark = "✔",
+    hl = { fg = "#3CB371" },
+  },
 }
 ```
 
@@ -246,7 +250,12 @@ picker = {
     { "<CR>", function() require("fzf-lua-grep-context.actions").confirm() end, mode = { "n", "i" } },
     { "<Esc>", function() require("fzf-lua-grep-context.actions").exit() end, mode = { "n", "i" } },
     -- more keymaps...
-  }
+  },
+  checkbox = {
+    -- Customize the checkmark character and highlight used in the picker
+    mark = "✔", -- You can use any symbol, such as "✓", "", or "✗"
+    hl = { fg = "#3CB371" }, -- Highlight settings for the mark (e.g., color, bold, italic)
+  },
 }
 ```
 

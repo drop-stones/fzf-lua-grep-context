@@ -85,6 +85,26 @@ local function parse_rg_type_list(output)
     end
   end
 
+  -- Map multiple filetype to a preferred label (e.g., "csharp" <- "cs")
+  local alias_map = {
+    csharp = { "cs" },
+    haskell = { "hs" },
+    python = { "py" },
+    typescript = { "ts" },
+    markdown = { "md" },
+    fsharp = { "fs" },
+  }
+
+  for filetype, aliases in pairs(alias_map) do
+    for _, alias in ipairs(aliases) do
+      if result[filetype] and result[alias] then
+        -- Merge fields from alias into preferred filetype
+        result[filetype] = vim.tbl_extend("keep", result[filetype], result[alias])
+        result[alias] = nil
+      end
+    end
+  end
+
   return result
 end
 

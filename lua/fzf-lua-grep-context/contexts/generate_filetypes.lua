@@ -1,4 +1,5 @@
 -- generate_filetypes.lua
+local devicons = require("nvim-web-devicons")
 
 ---@return string
 local function get_rg_types()
@@ -11,41 +12,99 @@ local function get_rg_types()
   return output
 end
 
----@return table<string, boolean>
-local function get_valid_filetypes()
-  local filetypes = {}
-
-  local mini_icons = require("mini.icons")
-  for _, filetype in ipairs(mini_icons.list("filetype")) do
-    filetypes[filetype] = true
+---@param output string
+---@return ContextEntries
+local function parse_rg_type_list(output)
+  ---Extract simple extensions from a type entry like "*.ext"
+  ---@param extlist string
+  ---@return string[]
+  local function extract_safe_extensions(extlist)
+    local extensions = {}
+    for ext in extlist:gmatch("%*%.([%w_]+)") do
+      table.insert(extensions, ext)
+    end
+    return extensions
   end
 
-  return filetypes
-end
+  ---Detect devicons icon source (filetype or extension)
+  ---@param filetype string
+  ---@param extensions string[]
+  ---@return { filetype: string?, extension: string? }?
+  local function detect_icon_source(filetype, extensions)
+    local result = {}
 
----@param output string
----@param valid_filetypes table<string, boolean>
----@return ContextEntries
-local function parse_rg_type_list(output, valid_filetypes)
+    -- Try devicons by filetype
+    local icon, _ = devicons.get_icon_by_filetype(filetype)
+    if icon then
+      result.filetype = filetype
+    end
+
+    -- Try devicons by extension (first match)
+    for _, ext in ipairs(extensions) do
+      icon, _ = devicons.get_icon(nil, ext)
+      if icon then
+        result.extension = ext
+        break
+      end
+    end
+
+    -- return result only if at least one was found
+    if result.filetype or result.extension then
+      return result
+    end
+
+    return nil
+  end
+
+  -- Parse each line of `rg --type-list` output
   local result = {}
   for line in output:gmatch("[^\r\n]+") do
-    local name, extlist = line:match("([^:]+):%s*(.+)")
-    if name and extlist and valid_filetypes[name] then
-      local entry = {
-        label = name, -- use lowercase label
-        filetype = name,
-        commands = {
-          rg = { flags = { "--type", name } },
-          git_grep = { globs = {} },
-        },
-      }
-      for ext in extlist:gmatch("%S+") do
-        ext = ext:gsub(",$", "") -- remove trailing comma
-        table.insert(entry.commands.git_grep.globs, ext)
+    local filetype, extlist = line:match("([^:]+):%s*(.+)")
+    if filetype and extlist then
+      local extensions = extract_safe_extensions(extlist)
+      local icon_info = detect_icon_source(filetype, extensions)
+      if icon_info then
+        local entry = {
+          label = filetype, -- original filetype used as label
+          filetype = icon_info.filetype,
+          extension = icon_info.extension,
+          commands = {
+            rg = { flags = { "--type", filetype } },
+            git_grep = { globs = {} },
+          },
+        }
+
+        -- Convert '*.ext' to glob list
+        for ext in extlist:gmatch("%S+") do
+          local extension, _ = ext:gsub(",$", "")
+          table.insert(entry.commands.git_grep.globs, extension)
+        end
+
+        result[filetype] = entry
       end
-      result[name] = entry
     end
   end
+
+  -- Map multiple filetype to a preferred label (e.g., "csharp" <- "cs")
+  local alias_map = {
+    csharp = { "cs" },
+    haskell = { "hs" },
+    python = { "py" },
+    typescript = { "ts" },
+    markdown = { "md" },
+    fsharp = { "fs" },
+  }
+
+  for filetype, aliases in pairs(alias_map) do
+    for _, alias in ipairs(aliases) do
+      if result[filetype] and result[alias] then
+        -- Merge fields from alias into preferred filetype
+        result[filetype] = vim.tbl_extend("keep", result[filetype], result[alias])
+        result[alias] = nil
+      end
+    end
+  end
+
   return result
 end
 
@@ -75,7 +134,12 @@ local function write_lua_table(tbl, filepath)
     local entry = tbl[name]
     file:write(string.format("    %s = {\n", name))
     file:write(string.format('      label = "%s",\n', entry.label))
-    file:write(string.format('      filetype = "%s",\n', entry.filetype))
+    if entry.filetype then
+      file:write(string.format('      filetype = "%s",\n', entry.filetype))
+    end
+    if entry.extension then
+      file:write(string.format('      extension = "%s",\n', entry.extension))
+    end
     file:write("      commands = {\n")
     file:write(string.format('        rg = { flags = { "--type", "%s" } },\n', name))
     local globs = entry.commands.git_grep.globs or {}
@@ -101,7 +165,6 @@ end
 
 -- Main
 local rg_output = get_rg_types()
-local valid_filetypes = get_valid_filetypes()
-local parsed = parse_rg_type_list(rg_output, valid_filetypes)
+local parsed = parse_rg_type_list(rg_output)
 write_lua_table(parsed, "filetypes.lua")
 print("filetypes.lua written with " .. tostring(#vim.tbl_keys(parsed)) .. " entries.\n")

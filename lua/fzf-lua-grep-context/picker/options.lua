@@ -22,6 +22,10 @@ local options = {
     { "G", actions.move_bottom, mode = "n" },
     { "q", actions.exit, mode = "n" },
   },
+  checkbox = {
+    mark = "✔",
+    hl = { fg = "#3CB371" },
+  },
 }
 
 ---Initialize default and user-defined picker options
@@ -29,6 +33,9 @@ local options = {
 function options.init(opts)
   -- Merge user options into default picker options
   util.deep_extend_inplace(options, opts or {})
+
+  -- Setup highlight group
+  vim.api.nvim_set_hl(0, "FzfLuaGrepContextCheckMark", options.checkbox.hl)
 end
 
 return options

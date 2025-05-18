@@ -22,6 +22,7 @@ local util = require("fzf-lua-grep-context.util")
 ---@field label string
 ---@field icon? { [1]: string, [2]: string }
 ---@field filetype? string
+---@field extension? string
 ---@field flags? string[]
 ---@field globs? string[]
 ---@field commands? table<string, CommandContext>
@@ -36,12 +37,18 @@ local util = require("fzf-lua-grep-context.util")
 ---@field default_group? string
 ---@field title_fmt? string
 ---@field keymaps? PickerKeymapEntry[]
+---@field checkbox? CheckboxConfig
 
 ---Describe a single keymap entry to use within the picker
 ---@class PickerKeymapEntry
 ---@field [1] string
 ---@field [2] function
 ---@field mode? string|string[]
+
+---Checkbox display options used in the picker UI
+---@class CheckboxConfig
+---@field mark? string
+---@field hl? table
 
 local M = {}
 

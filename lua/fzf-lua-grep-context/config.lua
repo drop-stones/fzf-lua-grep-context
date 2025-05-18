@@ -22,6 +22,7 @@ local util = require("fzf-lua-grep-context.util")
 ---@field label string
 ---@field icon? { [1]: string, [2]: string }
 ---@field filetype? string
+---@field extension? string
 ---@field flags? string[]
 ---@field globs? string[]
 ---@field commands? table<string, CommandContext>

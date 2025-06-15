@@ -23,7 +23,7 @@ local options = {
     { "q", actions.exit, mode = "n" },
   },
   checkbox = {
-    mark = "✔",
+    mark = "x",
     hl = { fg = "#3CB371" },
   },
 }

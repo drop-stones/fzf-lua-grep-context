@@ -119,7 +119,7 @@ Expand to see the list of all the default options below.
     },
   },
   checkbox = {
-    mark = "✔",
+    mark = "x",
     hl = { fg = "#3CB371" },
   },
 }
@@ -253,7 +253,7 @@ picker = {
   },
   checkbox = {
     -- Customize the checkmark character and highlight used in the picker
-    mark = "✔", -- You can use any symbol, such as "✓", "", or "✗"
+    mark = "x", -- You can use any symbol, such as "✓", "✔" or "✗"
     hl = { fg = "#3CB371" }, -- Highlight settings for the mark (e.g., color, bold, italic)
   },
 }

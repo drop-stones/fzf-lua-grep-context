@@ -1,16 +1,16 @@
 -- Load and flatten all picker action modules into a single table
+local cursor = require("fzf-lua-grep-context.actions.cursor")
+local exit = require("fzf-lua-grep-context.actions.exit")
+local select = require("fzf-lua-grep-context.actions.select")
 
-local M = {}
-
-for _, module in ipairs({
-  "fzf-lua-grep-context.actions.cursor",
-  "fzf-lua-grep-context.actions.select",
-  "fzf-lua-grep-context.actions.exit",
-}) do
-  local mod = require(module)
-  for name, func in pairs(mod) do
-    M[name] = func
-  end
-end
-
-return M
+return {
+  move_down = cursor.move_down,
+  move_up = cursor.move_up,
+  move_top = cursor.move_top,
+  move_bottom = cursor.move_bottom,
+  half_page_up = cursor.half_page_up,
+  half_page_down = cursor.half_page_down,
+  exit = exit.exit,
+  toggle_select = select.toggle_select,
+  confirm = select.confirm,
+}

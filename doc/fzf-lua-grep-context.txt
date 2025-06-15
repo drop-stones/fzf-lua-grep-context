@@ -1,4 +1,4 @@
-*fzf-lua-grep-context.txt*       For NVIM v0.8.0      Last change: 2025 May 18
+*fzf-lua-grep-context.txt*      For NVIM v0.8.0      Last change: 2025 June 15
 
 ==============================================================================
 Table of Contents                     *fzf-lua-grep-context-table-of-contents*

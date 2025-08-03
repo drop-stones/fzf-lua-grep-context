@@ -53,6 +53,7 @@ function M.init()
   -- Combine input and list into a vertical layout
   layout = Layout(
     {
+      relative = "editor", -- use editor-relative positioning for fullscreen popups
       position = {
         row = winopts.row,
         col = winopts.col,

@@ -1,4 +1,5 @@
 -- Handles plugin configuration and context initialization
+local border = require("fzf-lua-grep-context.picker.ui.border")
 local contexts = require("fzf-lua-grep-context.contexts")
 local picker = require("fzf-lua-grep-context.picker")
 local transform = require("fzf-lua-grep-context.transform")
@@ -9,6 +10,7 @@ local util = require("fzf-lua-grep-context.util")
 
 ---User plugin options passed to setup()
 ---@class FzfLuaGrepContextOptions
+---@field border? nui_popup_border_option_style
 ---@field contexts? ContextGroups | ContextGroup
 ---@field picker? PickerOptions
 
@@ -64,6 +66,8 @@ function M.setup(opts)
 
   -- Set plugin root path for access from headless child processes
   vim.env.FZF_LUA_GREP_CONTEXT = util.get_plugin_root()
+
+  border.init(opts.border)
 
   -- Initialize all available context groups
   contexts.initialize_contexts(opts.contexts)

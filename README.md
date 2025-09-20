@@ -88,6 +88,7 @@ Expand to see the list of all the default options below.
 
 ```lua
 {
+  border = "rounded", -- Border style for the picker window
   contexts = {
     default = {
       title = "Default",
@@ -117,10 +118,10 @@ Expand to see the list of all the default options below.
       { "G", function() require("fzf-lua-grep-context.actions").move_bottom() end, mode = "n" },
       { "q", function() require("fzf-lua-grep-context.actions").exit() end, mode = "n" },
     },
-  },
-  checkbox = {
-    mark = "x",
-    hl = { fg = "#3CB371" },
+    checkbox = {
+      mark = "x",
+      hl = { fg = "#3CB371" },
+    },
   },
 }
 ```
@@ -283,6 +284,18 @@ fn_transform_cmd = function(query, cmd, _)
   vim.opt.rtp:append(vim.env.FZF_LUA_GREP_CONTEXT)
   return require("fzf-lua-grep-context.transform").git_grep(query, cmd)
 end
+```
+
+### 🎨 Border Option
+
+The plugin introduces a `border` option to handle cases when `fzf-lua` profiles (e.g., `border-fused`) return a **function** instead of a value that [`nui.nvim`](https://github.com/MunifTanjim/nui.nvim) accepts.
+
+By default, the fallback border style is `"rounded"`.<br />
+Accepted values are the same as `nui.nvim` border styles (<https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup#borderstyle>).<br />
+You can override this with your own preference:
+
+```lua
+border = "single", -- fallback if fzf-lua provides a function
 ```
 
 ## 🩺 Troubleshooting

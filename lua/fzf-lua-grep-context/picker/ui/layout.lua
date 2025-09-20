@@ -3,6 +3,7 @@ local Input = require("nui.input")
 local Layout = require("nui.layout")
 local NuiText = require("nui.text")
 local Popup = require("nui.popup")
+local border = require("fzf-lua-grep-context.picker.ui.border")
 local filetype = require("fzf-lua-grep-context.filetype")
 local picker_state = require("fzf-lua-grep-context.picker.state")
 local state = require("fzf-lua-grep-context.picker.ui.state")
@@ -23,13 +24,10 @@ function M.init()
 
   -- Setup input popup window with live filtering callback
   input_popup = Input({
-    border = {
-      style = winopts.border,
-      text = {
-        top = picker_state.title,
-        top_align = winopts.title_pos,
-      },
-    },
+    border = border.resolve(winopts.border, {
+      top = picker_state.title,
+      top_align = winopts.title_pos,
+    }),
     win_options = {
       winhighlight = "Normal:FzfLuaNormal,FloatBorder:FzfLuaBorder,FloatTitle:FzfLuaTitle",
     },
@@ -44,7 +42,7 @@ function M.init()
 
   -- Setup list popup window
   list_popup = Popup({
-    border = { style = winopts.border },
+    border = border.resolve(winopts.border),
     win_options = {
       winhighlight = "Normal:FzfLuaNormal,FloatBorder:FzfLuaBorder,FloatTitle:FzfLuaTitle",
     },

@@ -117,10 +117,10 @@ Expand to see the list of all the default options below.
       { "G", function() require("fzf-lua-grep-context.actions").move_bottom() end, mode = "n" },
       { "q", function() require("fzf-lua-grep-context.actions").exit() end, mode = "n" },
     },
-  },
-  checkbox = {
-    mark = "x",
-    hl = { fg = "#3CB371" },
+    checkbox = {
+      mark = "x",
+      hl = { fg = "#3CB371" },
+    },
   },
 }
 ```
